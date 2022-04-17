@@ -3,10 +3,16 @@ import PropTypes from "prop-types";
 
 export default function Paciente({
  paciente
- ,setPaciente
+ ,setPaciente,eliminarPaciente,id
 })
 
+
 {
+ const handleDelete=()=>{
+const confirm=alert("Quieres eliminar paciente?")
+console.log(confirm);
+
+ }
   return (
     <div className=" shadow-md text-white bg-sky-600 rounded-md p-5 m-10">
       <p className="font-bold m-2">
@@ -32,7 +38,7 @@ export default function Paciente({
           Editar paciente
         
         </button>
-        <button className="bg-red-600 hover:bg-red-500   rounded-lg">
+        <button className="bg-red-600 hover:bg-red-500   rounded-lg" onClick={()=>handleDelete()}>
           Eliminar paciente
         </button>
       </div>

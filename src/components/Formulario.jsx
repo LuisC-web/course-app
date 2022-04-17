@@ -1,6 +1,7 @@
 import { React, useState, useEffect } from "react";
+import Button from "./Button.jsx";
 import Error from "./Error.jsx";
-function Formulario({ pacientes, setPacientes,paciente }) {
+function Formulario({paciente , setPaciente, pacientes, setPacientes}) {
   const [nombre, setNombre] = useState("");
   const [nombreDuenio, setNombreDuenio] = useState("");
   const [correo, setCorreo] = useState("");
@@ -35,21 +36,28 @@ function Formulario({ pacientes, setPacientes,paciente }) {
   const handSome = (e) => {
     e.preventDefault();
 
+    const objetoPaciente = {
+      nombreMascota: nombre,
+      nombreDuenio: nombreDuenio,
+      correo: correo,
+      fecha: fecha,
+      sintomas: sintomas,
+    };
     if ([nombre, nombreDuenio, correo, sintomas].includes("")) {
       setError(true);
     } else {
       setError(false);
-      const objetoPaciente = {
-        nombreMascota: nombre,
-        nombreDuenio: nombreDuenio,
-        correo: correo,
-        fecha: fecha,
-        sintomas: sintomas,
-        id: generatorId(),
-      };
+     if (paciente.id) {
+      objetoPaciente.id=paciente.id
+      const pacienteActualizado= pacientes.map(pacienteState=>pacienteState.id===paciente.id?objetoPaciente:pacienteState)
+      setPacientes(pacienteActualizado)
+     }
+     else{
+      objetoPaciente.id=generatorId()
       setPacientes([...pacientes, objetoPaciente]);
+     }
       clear();
-    }
+     }
   };
 
   return (
@@ -130,7 +138,7 @@ function Formulario({ pacientes, setPacientes,paciente }) {
             onChange={(e) => setSintomas(e.target.value)}
           />
         </div>
-       
+       <Button setPaciente={setPaciente} handSome={handSome}  value={Object.keys(paciente).length>0?"Editar":"Enviar"}></Button>
       </form>
     </div>
   );

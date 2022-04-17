@@ -1,9 +1,6 @@
 import {React, useEffect } from "react";
 import Paciente from "./Paciente";
-function ListadoPaciente({ pacientes, setPaciente }) {
- useEffect(() => {
-  console.log("nuevo paciente")
- }, [pacientes])
+function ListadoPaciente({ pacientes, setPaciente,eliminarPaciente }) {
  
   return (
     <div className="md:w-1/2 lg:w-3/5 overflow-scroll h-screen">
@@ -13,12 +10,14 @@ function ListadoPaciente({ pacientes, setPaciente }) {
         Administra tus pacientes y{" "}
         <span className="text-orange-400">citas</span>
       </p>
-      {pacientes.map((paciente, id) => {
+      {pacientes.map((paciente) => {
         return (
           <Paciente
-            key={paciente.id}
-           paciente={paciente}
-            setPaciente={setPaciente}
+          paciente={paciente}
+          setPaciente={setPaciente}
+          eliminarPaciente={eliminarPaciente}
+          key={paciente.id}
+          id={paciente.id}
           ></Paciente>
         );
       })}
