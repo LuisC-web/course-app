@@ -1,33 +1,55 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types';
+import React, { useState } from "react";
+import PropTypes from "prop-types";
 
+export default function Paciente({
+ paciente
+ ,setPaciente
+})
 
-
-
-export default function Paciente({nombreMascota,nombreDuenio,correo,fechaDeIngreso,sintomas}) {
-
-
+{
   return (
-<div className=" shadow-md bg-sky-600 rounded-md p-5 m-10">
-      <p className="font-bold">Nombre de la mascota:{""} <span className="font-normal">{nombreMascota}</span></p>
-      <p className="font-bold">Nombre del dueño:{""} <span className="font-normal">{nombreDuenio}</span></p>
-      <p className="font-bold">Correo:{""} <span className="font-normal">{correo}</span></p>
-      <p className="font-bold">Fecha de ingreso:{""} <span className="font-normal">{fechaDeIngreso}</span></p>
-      <p className="font-bold">Sintomas:{""} <span className="font-normal">{sintomas}</span></p>
-     </div>  )
+    <div className=" shadow-md text-white bg-sky-600 rounded-md p-5 m-10">
+      <p className="font-bold m-2">
+        Nombre de la mascota:{""}{" "}
+        <span className="font-normal">{paciente.nombreMascota}</span>
+      </p>
+      <p className="font-bold m-2">
+        Nombre del dueño:{""}{" "}
+        <span className="font-normal">{paciente.nombreDuenio}</span>
+      </p>
+      <p className="font-bold m-2">
+        Correo:{""} <span className="font-normal">{paciente.correo}</span>
+      </p>
+      <p className="font-bold m-2">
+        Fecha de ingreso:{""}{" "}
+        <span className="font-normal">{paciente.fecha}</span>
+      </p>
+      <p className="font-bold m-2">
+        Sintomas:{""} <span className="font-normal">{paciente.sintomas}</span>
+      </p>
+      <div className="grid grid-cols-2 m-3 text-black font-medium text-xl">
+        <button onClick={()=>console.log(setPaciente(paciente))} className="bg-green-600 hover:bg-green-500 transition-colors p-2 mr-4 rounded-lg">
+          Editar paciente
+        
+        </button>
+        <button className="bg-red-600 hover:bg-red-500   rounded-lg">
+          Eliminar paciente
+        </button>
+      </div>
+    </div>
+  );
 }
-Paciente.defaultProps={
-nombreMascota:"Juanito",
-nombreDuenio:"Alex",
-correo:"correo@example.com",
-fechaDeIngreso:"Hoy",
-sintomas:"Lorem ipsum dolor sit amet consectetur adipisicing elit. Modi illo nulla, nam corporis ullam consectetur et voluptas laboriosam. Unde cupiditate perspiciatis dicta quae fugit similique consectetur voluptatibus alias natus! Repudiandae."
-}
-Paciente.PropTypes={
- nombreMascota:PropTypes.string,
- nombreDuenio:PropTypes.string,
- correo:PropTypes.string,
- fechaDeIngreso:PropTypes.string,
- sintomas:PropTypes.string,
-
-}
+Paciente.defaultProps = {
+  nombreMascota: "",
+  nombreDuenio: "",
+  correo: "",
+  fechaDeIngreso: "",
+  sintomas: "",
+};
+Paciente.PropTypes = {
+  nombreMascota: PropTypes.string,
+  nombreDuenio: PropTypes.string,
+  correo: PropTypes.string,
+  fechaDeIngreso: PropTypes.string,
+  sintomas: PropTypes.string,
+};

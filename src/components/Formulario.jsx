@@ -1,28 +1,59 @@
-import { React, useState } from "react";
+import { React, useState, useEffect } from "react";
 import Error from "./Error.jsx";
-function Formulario() {
+function Formulario({ pacientes, setPacientes,paciente }) {
   const [nombre, setNombre] = useState("");
   const [nombreDuenio, setNombreDuenio] = useState("");
   const [correo, setCorreo] = useState("");
   const [sintomas, setSintomas] = useState("");
+  const [fecha, setFecha] = useState("");
   const [error, setError] = useState(false);
+  useEffect(() => {
+
+   if (Object.keys(paciente).length>0) {
+    
+    setNombre(paciente.nombreMascota)
+    setNombreDuenio(paciente.nombreDuenio)
+    setCorreo(paciente.correo)
+    setSintomas(paciente.sintomas)
+    setFecha(paciente.fecha)
+
+   }
+  }, [paciente])
+  
+  const generatorId = () => {
+    const random = Math.random().toString(36).substring(2);
+    const fecha = Date.now.toString(36);
+    return random + fecha;
+  };
+  const clear = () => {
+    setNombre("");
+    setNombreDuenio("");
+    setCorreo("");
+    setFecha("");
+    setSintomas("");
+  };
   const handSome = (e) => {
     e.preventDefault();
-    console.warn(
-      "Cargando...",
-      [nombre, nombreDuenio, correo, sintomas].includes("")
-    );
 
     if ([nombre, nombreDuenio, correo, sintomas].includes("")) {
       setError(true);
     } else {
       setError(false);
+      const objetoPaciente = {
+        nombreMascota: nombre,
+        nombreDuenio: nombreDuenio,
+        correo: correo,
+        fecha: fecha,
+        sintomas: sintomas,
+        id: generatorId(),
+      };
+      setPacientes([...pacientes, objetoPaciente]);
+      clear();
     }
   };
 
-  console.warn(nombre);
   return (
-    <div className="md:w-1/2 lg:w-2/5">
+    <div className="md:w-1/2 lg:w-2/5 mx-10">
       <h2 className=" font-black text-4xl text-center ">Formulario</h2>
       <br />
       <p className="text-center">
@@ -82,6 +113,8 @@ function Formulario() {
             id="fecha-de-ingreso"
             type="date"
             className="rounded-lg mt-4 p-1 border-2 border-slate-900 w-full placeholder-slate-800"
+            value={fecha}
+            onChange={(e) => setFecha(e.target.value)}
           />
         </div>
         <div className="mt-5">
@@ -93,16 +126,11 @@ function Formulario() {
             type="text"
             className="rounded-lg mt-4 p-1 border-2 border-slate-900 w-full placeholder-slate-800"
             placeholder="Descripción de sintomas"
-            vvalue={sintomas}
+            value={sintomas}
             onChange={(e) => setSintomas(e.target.value)}
           />
         </div>
-        <input
-          id="fecha-de-ingreso"
-          type="submit"
-          className=" rounded-sm mt-4 p-3  w-full bg-slate-800 text-white hover:bg-slate-900 cursor-pointer transition-colors"
-          value="Enviar"
-        />
+       
       </form>
     </div>
   );
